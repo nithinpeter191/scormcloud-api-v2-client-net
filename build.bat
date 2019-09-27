@@ -8,9 +8,16 @@ SET CSCPATH=%SYSTEMROOT%\Microsoft.NET\Framework\v4.0.30319
 if not exist ".\nuget.exe" powershell -Command "(new-object System.Net.WebClient).DownloadFile('https://nuget.org/nuget.exe', '.\nuget.exe')"
 .\nuget.exe install src\Com.RusticiSoftware.Cloud.V2\packages.config -o packages
 
+if not exist ".\src\Com.RusticiSoftware.Cloud.V3\bin" mkdir src\Com.RusticiSoftware.Cloud.V2\bin
+if not exist ".\src\Com.RusticiSoftware.Cloud.V2\bin\Release" mkdir src\Com.RusticiSoftware.Cloud.V2\bin\Release
 if not exist ".\bin" mkdir bin
+if not exist ".\bin\Release" mkdir bin\Release
 
-copy packages\Newtonsoft.Json.8.0.3\lib\net45\Newtonsoft.Json.dll bin\Newtonsoft.Json.dll
-copy packages\RestSharp.105.1.0\lib\net45\RestSharp.dll bin\RestSharp.dll
-%CSCPATH%\csc  /reference:bin\Newtonsoft.Json.dll;bin\RestSharp.dll;System.ComponentModel.DataAnnotations.dll  /target:library /out:bin\IO.Swagger.dll /recurse:src\IO.Swagger\*.cs /doc:bin\IO.Swagger.xml
+copy packages\Newtonsoft.Json.8.0.3\lib\net45\Newtonsoft.Json.dll src\Com.RusticiSoftware.Cloud.V2\bin\Release\Newtonsoft.Json.dll
+copy packages\RestSharp.105.1.0\lib\net45\RestSharp.dll src\Com.RusticiSoftware.Cloud.V2\bin\Release\RestSharp.dll
+copy packages\Newtonsoft.Json.8.0.3\lib\net45\Newtonsoft.Json.dll bin\Release
+copy packages\RestSharp.105.1.0\lib\net45\RestSharp.dll bin\Release
 
+%CSCPATH%\csc  /reference:src\Com.RusticiSoftware.Cloud.V2\bin\Release\Newtonsoft.Json.dll;src\Com.RusticiSoftware.Cloud.V2\bin\Release\RestSharp.dll;System.ComponentModel.DataAnnotations.dll  /target:library /out:src\Com.RusticiSoftware.Cloud.V2\bin\Release\Com.RusticiSoftware.Cloud.V2.dll /recurse:src\Com.RusticiSoftware.Cloud.V2\*.cs
+
+copy src\Com.RusticiSoftware.Cloud.V2\bin\Release\Com.RusticiSoftware.Cloud.V2.dll bin\Release

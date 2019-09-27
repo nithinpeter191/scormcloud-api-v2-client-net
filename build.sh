@@ -36,3 +36,6 @@ then
 else
   echo "[INFO] bin/Com.RusticiSoftware.Cloud.V2.dll was created successfully"
 fi
+
+mono nuget.exe pack src/Com.RusticiSoftware.Cloud.V2/Com.RusticiSoftware.Cloud.V2.csproj
+
